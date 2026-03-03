@@ -1,0 +1,122 @@
+syntax = "proto3";
+
+package user.service.frontend.customer.v1;
+
+import "base/frontend/v1/customer.proto";
+
+option go_package = "github.com/AskatNa/apis-gen-user-service/service/frontend/customer/v1;customer";
+
+//------------------------
+// UserClient service:
+//------------------------
+// Format: proto
+// client: frontend (web, native apps)
+// server: user-service
+// Access:
+//   gRPC
+//---------------------------------------------------------------------------------
+service CustomerService {
+ //------------------------
+  // Register: registers a customer
+  //------------------------
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+   //------------------------
+  // Login: logins a customer into the system
+  //------------------------
+  rpc Login(LoginRequest) returns (LoginResponse);
+
+  //------------------------
+  // RefreshToken: refreshes a customer JWT token using giving refresh token
+  //------------------------
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
+
+  //------------------------
+  // Get: get a client information
+  //------------------------
+  rpc Get(GetRequest) returns (GetResponse);
+
+  //------------------------
+  // Update: update a client information
+  //------------------------
+  rpc Update(UpdateRequest) returns (UpdateResponse);
+
+  //------------------------
+  // Update: update a client information
+  //------------------------
+  rpc Delete(DeleteRequest) returns (DeleteResponse);
+}
+
+message RegisterRequest {
+  //email
+  string email = 1;
+  // password
+  string password = 2;
+}
+
+message RegisterResponse {
+  // id of a new entity
+  uint64 id = 1;
+}
+message LoginRequest {
+  // customer email
+  string email = 1;
+  // customer password
+  string password = 2;
+}
+
+message LoginResponse {
+  // JWT access token
+  string access_token = 1;
+  // JWT refresh token
+  string refresh_token = 2;
+}
+
+message RefreshTokenRequest {
+  // JWT refresh token
+  string refresh_token = 1;
+}
+
+message RefreshTokenResponse {
+  // JWT refreshed access token
+  string access_token = 1;
+  // JWT updated refresh token
+  string refresh_token = 2;
+}
+
+message GetRequest {
+  // id
+  uint64 id = 1;
+}
+
+message GetResponse {
+  // client struct
+  base.frontend.v1.Customer customer = 1;
+}
+
+// Update request
+message UpdateRequest {
+  // client id
+  uint64 id = 1;
+  // name
+  string name = 2;
+  // email
+  string email = 3;
+  // phone
+  string phone = 4;
+  // password
+  string password = 5;
+  // old password
+  string old_password = 6;
+}
+
+message UpdateResponse {
+  // client struct
+  base.frontend.v1.Customer customer = 1;
+}
+
+message DeleteRequest {
+  // id
+  uint64 id = 1;
+}
+
+message DeleteResponse {}

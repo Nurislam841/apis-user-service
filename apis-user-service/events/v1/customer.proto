@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package user.events.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/AskatNa/apis-gen-user-service/events/v1;events";
+
+message Customer {
+  // client id
+  uint64 id = 1;
+  // client full name
+  string name = 2;
+  // email
+  string email = 3;
+  // phone
+  string phone = 4;
+  // created at == registration time for a client
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+  // check client status
+  bool is_deleted = 7;
+}

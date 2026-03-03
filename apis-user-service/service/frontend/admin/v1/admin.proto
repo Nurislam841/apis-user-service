@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package user.service.frontend.customer.v1;
+
+import "base/frontend/v1/customer.proto";
+
+option go_package = "github.com/AskatNa/apis-gen-user-service/service/frontend/admin/v1;admin";
+// Role enum
+enum Role {
+    ROLE_UNSPECIFIED = 0;
+    ROLE_CUSTOMER = 1;
+    ROLE_ADMIN = 2;
+}
+//------------------------
+// UserClient service:
+//------------------------
+// Format: proto
+// client: frontend (web, native apps)
+// server: user-service
+// Access:
+//   gRPC
+//---------------------------------------------------------------------------------
+service AdminService {
+    rpc GetCustomerByEmail(GetCustomerByEmailRequest) returns (GetCustomerByEmailResponse) {}
+    rpc UpdateCustomer(UpdateCustomerRequest) returns (UpdateCustomerResponse) {}
+    rpc DeleteCustomer(DeleteCustomerRequest) returns (DeleteCustomerResponse) {}
+    rpc ListCustomers(ListCustomersRequest) returns (ListCustomersResponse) {}
+}
+
+// Request/Response messages for admin operations
+message GetCustomerByEmailRequest {
+    string email = 1;
+}
+
+message GetCustomerByEmailResponse {
+    base.frontend.v1.Customer customer = 1;
+}
+
+message UpdateCustomerRequest {
+    string email = 1;
+    optional string name = 2;
+    optional string phone = 3;
+    optional string new_email = 4;
+}
+
+message UpdateCustomerResponse {
+    base.frontend.v1.Customer customer = 1;
+}
+
+message DeleteCustomerRequest {
+    string email = 1;
+}
+
+message DeleteCustomerResponse {}
+
+message ListCustomersRequest {
+    int32 page_size = 1;
+    int32 page_number = 2;
+    optional string email_filter = 3;
+    optional string name_filter = 4;
+}
+
+message ListCustomersResponse {
+    repeated base.frontend.v1.Customer customer = 1;
+    int32 total_count = 2;
+}
